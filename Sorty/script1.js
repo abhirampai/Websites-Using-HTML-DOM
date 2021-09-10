@@ -100,8 +100,8 @@ CreateElementAndAppend(
 );
 
 const onClickSubmit = () => {
-  signUpModal.style.display = "block";
-  main.style.opacity = 0.4;
+  loginModal.style.display === "none" &&
+    ((signUpModal.style.display = "block"), (main.style.opacity = 0.4));
 };
 
 CreateElementAndAppend(
