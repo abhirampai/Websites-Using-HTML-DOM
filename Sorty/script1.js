@@ -207,6 +207,12 @@ height: 2rem;
 text-align: center;
 `;
 
+input.onfocus = function () {
+  input.style.cssText += `
+  border-color: black;
+  `;
+};
+
 let closeBtn = document.createElement("span");
 closeBtn.innerHTML = "&times";
 closeBtn.style.cssText += `
@@ -235,6 +241,16 @@ border-radius: 0.5rem;
 height: 2rem;
 text-align: center;
 `;
+
+input1.onfocus = function () {
+  input1.style.cssText += `
+  background-color: blue;
+  `;
+};
+
+input1.addEventListener("focusout", function () {
+  input1.style.removeProperty("background-color");
+});
 
 let password = document.createElement("input");
 password.type = "password";
@@ -283,8 +299,27 @@ padding:0.85rem;
 margin-bottom: 1.2rem;
 border-color:transparent;
 background-color:#8EE5D1;
+font-weight:bold;
 font-size:0.875rem;
 cursor: pointer;
+`;
+
+const addOptionsToSelect = (option, parent) => {
+  let newOption = document.createElement("option");
+  newOption.text = option;
+  parent.add(newOption);
+};
+
+let selectBox = document.createElement("select");
+addOptionsToSelect("user", selectBox);
+addOptionsToSelect("admin", selectBox);
+selectBox.style.cssText += `
+  color: #ffffff;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+  background-color: DodgerBlue;
 `;
 
 const onClickSubmitInLoginModal = (e) => {
@@ -314,8 +349,9 @@ form.appendChild(submitBtn);
 
 signUpModal.appendChild(closeBtn1);
 signUpModal.appendChild(modalHeading1);
-signUpModal.append(form1);
-form1.append(input1);
-form1.append(password1);
-form1.append(confirmPassword);
-form1.append(submitBtn1);
+signUpModal.appendChild(form1);
+form1.appendChild(input1);
+form1.appendChild(password1);
+form1.appendChild(confirmPassword);
+form1.appendChild(selectBox);
+form1.appendChild(submitBtn1);
