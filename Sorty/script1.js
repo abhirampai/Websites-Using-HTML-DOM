@@ -36,6 +36,18 @@ padding: 5rem;
 background-color: white;
 `;
 
+let getStartedModal = document.createElement("div");
+getStartedModal.style.display = "none";
+getStartedModal.style.cssText += `
+position: absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+max-width: 100%;
+padding: 5rem;
+background-color: white;
+`;
+
 const CreateElementAndAppend = (
   value,
   style = null,
@@ -146,10 +158,15 @@ CreateElementAndAppend(
   "p",
   leftSide
 );
+
+const onClickGetSubmit = () => {
+  loginModal.style.display === "none" &&
+    ((getStartedModal.style.display = "block"), (main.style.opacity = 0.4));
+};
 CreateElementAndAppend(
   "Get Started",
   `border-radius:4.5rem;padding:1.2rem;cursor: pointer;margin-bottom: 1.2rem;border-color:transparent;background-color:#8EE5D1;font-size:1.5rem`,
-  null,
+  onClickGetSubmit,
   `button`,
   leftSide
 );
@@ -173,6 +190,7 @@ main.appendChild(section);
 
 document.body.appendChild(loginModal);
 document.body.appendChild(signUpModal);
+document.body.appendChild(getStartedModal);
 
 let modalHeading = document.createElement("h1");
 modalHeading.innerHTML = "Login";
@@ -181,6 +199,10 @@ modalHeading.style.textAlign = "center";
 let modalHeading1 = document.createElement("h1");
 modalHeading1.innerHTML = "Sign Up";
 modalHeading1.style.textAlign = "center";
+
+let modalHeading2 = document.createElement("h1");
+modalHeading2.innerHTML = "Subscribe to Newsletter";
+modalHeading2.style.textAlign = "center";
 
 let form = document.createElement("form");
 form.style.cssText += `
@@ -192,6 +214,14 @@ padding: 0 10rem;
 
 let form1 = document.createElement("form");
 form1.style.cssText += `
+display: flex;
+flex-direction: column;
+row-gap: 1.2rem;
+padding: 0 10rem;
+`;
+
+let form2 = document.createElement("form");
+form2.style.cssText += `
 display: flex;
 flex-direction: column;
 row-gap: 1.2rem;
@@ -233,6 +263,16 @@ closeBtn1.style.cssText += `
   cursor: pointer;
 `;
 
+let closeBtn2 = document.createElement("span");
+closeBtn2.innerHTML = "&times";
+closeBtn2.style.cssText += `
+  color: black;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+`;
+
 let input1 = document.createElement("input");
 input1.type = "text";
 input1.placeholder = "oliver@example.com";
@@ -240,6 +280,38 @@ input1.style.cssText += `
 border-radius: 0.5rem;
 height: 2rem;
 text-align: center;
+`;
+
+let input2 = document.createElement("input");
+input2.type = "text";
+input2.placeholder = "oliver@example.com";
+input2.style.cssText += `
+border-radius: 0.5rem;
+height: 2rem;
+text-align: center;
+`;
+
+let label = document.createElement("label");
+
+label.style.cssText += `
+
+text-align: left;
+`;
+
+let checkbox = document.createElement("input");
+checkbox.type = "checkbox";
+checkbox.checked = true;
+
+let subscribe = document.createElement("button");
+subscribe.innerHTML = "Subscribe";
+subscribe.style.cssText += `
+border-radius:1.5rem;
+padding:0.85rem;
+margin-bottom: 1.2rem;
+border-color:transparent;
+background-color:#8EE5D1;
+font-size:0.875rem;
+cursor: pointer;
 `;
 
 input1.onfocus = function () {
@@ -335,10 +407,28 @@ const onClickSubmitInSignUpModal = (e) => {
   main.style.opacity = 1;
 };
 
+const onClickSubscribe = (e) => {
+  e.preventDefault();
+  subscribe.innerHTML = "Subscribed<span>&check;</span>";
+  signUpModal.style.display = "none";
+  loginModal.style.display = "none";
+  main.style.opacity = 1;
+};
+
+const onCloseSubscribe = (e) => {
+  e.preventDefault();
+  getStartedModal.style.display = "none";
+  signUpModal.style.display = "none";
+  loginModal.style.display = "none";
+  main.style.opacity = 1;
+};
+
 submitBtn.addEventListener("click", onClickSubmitInLoginModal);
 closeBtn.addEventListener("click", onClickSubmitInLoginModal);
 submitBtn1.addEventListener("click", onClickSubmitInSignUpModal);
 closeBtn1.addEventListener("click", onClickSubmitInSignUpModal);
+subscribe.addEventListener("click", onClickSubscribe);
+closeBtn2.addEventListener("click", onCloseSubscribe);
 
 loginModal.appendChild(closeBtn);
 loginModal.appendChild(modalHeading);
@@ -355,3 +445,12 @@ form1.appendChild(password1);
 form1.appendChild(confirmPassword);
 form1.appendChild(selectBox);
 form1.appendChild(submitBtn1);
+
+getStartedModal.appendChild(closeBtn2);
+getStartedModal.appendChild(modalHeading2);
+getStartedModal.appendChild(form2);
+form2.appendChild(input2);
+form2.appendChild(label);
+label.appendChild(checkbox);
+label.append("Get Notificaiton");
+form2.appendChild(subscribe);
